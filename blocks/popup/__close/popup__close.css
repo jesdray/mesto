@@ -9,10 +9,16 @@
     -webkit-transform: rotate(45deg);
     -o-transform: rotate(45deg);
     transform: rotate(45deg);
+    background-image: url(../../../images/plus.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    outline: none;
 }
 
 .popup__close:hover {
-    opacity: 0.8;
+    opacity: 0.6;
     cursor: pointer;
 }
 

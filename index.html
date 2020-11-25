@@ -7,84 +7,84 @@
     <link rel="stylesheet" href="page/index.css">
 </head>
 <body class="body">
-    <div class="popup">
-        <form class="popup popup__container">
-            <img src="images/plus.svg" alt="Закрыть" class="popup__close">
-            <h2 class="popup__title">Редактировать профиль</h2>
-            <input type="text" placeholder='Имя Фамилия' class="popup__text popup__name" />
-            <input type="text" placeholder='Работа' class="popup__text popup__job" />
-            <button type="submit" class="popup__button">Сохранить</button>
-        </form>
-    </div>
     <div class="page">
         <header class="header">
-            <img src="images/logo.svg" alt="Mesto Russia" class="header__logo">
+            <img src="images/logo.svg" alt="Место.Россия" class="header__logo">
         </header>
-        <section class="profile">
+        <main class="main">
+             <section class="profile">
             <img src="images/profile_avatar.jpg" alt="Ваш аватар" class="profile__avatar">
             <div class="profile__info">
               <h1 class="profile__name">Жак-Ив Кусто</h1>
               <p class="profile__job">Исследователь океана</p>
-              <img src="images/edit_button.svg" alt="Редактировать профиль" class="profile__edit-button">
+              <button type="button" class='profile__edit-button'></button>
             </div>
-            <div class="profile__add-button">
-                <img src="images/plus.svg" alt="Добавить изображение">
-            </div>
-        </section>
-        <section class="elements">
+            <button type="button" class="profile__add-button"><img src="images/plus.svg" alt="Добавить изображение" aria-label="Добавить изображение"></button>
+             </section>
+            <section class="elements">
             <!-- Карточка 1 -->
-            <div class="element">
+            <article class="element">
                 <img src="images/karachayevsk.jpg" alt="Карачаевск" class="element__image">
                 <div class="element__content">
                     <h2 class="element__image-name">Карачаевск</h2>
-                    <img src="images/like.svg" alt="like" class="element__like">
+                    <button type="button" class="element__button-like"><img src="images/like.svg" alt="like"></button>
                 </div>
-            </div>
+            </article>
             <!-- Карточка 2 -->
-            <div class="element">
+            <article class="element">
                 <img src="images/mount_elbrus.jpg" alt="Карачаевск" class="element__image">
                 <div class="element__content">
                     <h2 class="element__image-name">Карачаевск</h2>
-                    <img src="images/like.svg" alt="like" class="element__like">
+                    <button type="button" class="element__button-like"><img src="images/like.svg" alt="like"></button>
                 </div>
-            </div>
+            </article>
             <!-- Карточка 3 -->
-            <div class="element">
+            <article class="element">
                 <img src="images/dombay.jpg" alt="Карачаевск" class="element__image">
                 <div class="element__content">
                     <h2 class="element__image-name">Карачаевск</h2>
-                    <img src="images/like.svg" alt="like" class="element__like">
+                    <button type="button" class="element__button-like"><img src="images/like.svg" alt="like"></button>
                 </div>
-            </div>
+            </article>
             <!-- Карточка 4 -->
-            <div class="element">
+            <article class="element">
                 <img src="images/mount_elbrus.jpg" alt="Карачаевск" class="element__image">
                 <div class="element__content">
                     <h2 class="element__image-name">Карачаевск</h2>
-                    <img src="images/like.svg" alt="like" class="element__like">
+                    <button type="button" class="element__button-like"><img src="images/like.svg" alt="like"></button>
                 </div>
-            </div>
+            </article>
             <!-- Карточка 5 -->
-            <div class="element">
+            <article class="element">
                 <img src="images/dombay.jpg" alt="Карачаевск" class="element__image">
                 <div class="element__content">
                     <h2 class="element__image-name">Карачаевск</h2>
-                    <img src="images/like.svg" alt="like" class="element__like">
+                    <button type="button" class="element__button-like"><img src="images/like.svg" alt="like"></button>
                 </div>
-            </div>
+            </article>
             <!-- Карточка 6 -->
-            <div class="element">
+            <article class="element">
                 <img src="images/karachayevsk.jpg" alt="Карачаево-Черкессия" class="element__image">
                 <div class="element__content">
                     <h2 class="element__image-name">Карачаево-Черкессия</h2>
-                    <img src="images/like.svg" alt="like" class="element__like">
+                    <button type="button" class="element__button-like"><img src="images/like.svg" alt="like"></button>
                 </div>
-            </div>
-        </section>
+            </article>
+             </section>
+        </main>
         <footer class="footer">
             <p class="footer__copyright">&copy; Шумилов Евгений</p>
         </footer>
     </div>
-    <script src="script.js"></script>
+    <div class="popup">
+        <form class="popup__container">
+            <button type="button" class="popup__close"></button>
+            <h2 class="popup__title">Редактировать профиль</h2>
+            <input type="text" name="name" placeholder='Имя Фамилия' class="popup__text popup__script_name" value='' />
+            <input type="text" name="job" placeholder='Работа' class="popup__text popup__script_job" value='' />
+            <button type="submit" class="popup__button">Сохранить</button>
+        </form>
+    </div>
+    <script src="scripts/script.js"></script>
 </body>
 </html>

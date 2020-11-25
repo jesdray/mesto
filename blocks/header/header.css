@@ -2,9 +2,8 @@
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
-    border-bottom: 1px solid #545454;
+    border-bottom: 1px solid rgba(54, 54,54, 0.7);
     width: 70%;
-    min-height: 74px;
     margin: 0 auto 0;
     padding: 45px 0 0;
 }
@@ -12,14 +11,12 @@
 @media screen and (max-width: 950px) {
     .header {
         width: 90%;
-        min-height: 64px;
     }
 }
 
 @media screen and (max-width: 740px) {
     .header {
         width: 95%;
-        min-height: 56px;
     }
 }
 
