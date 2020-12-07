@@ -101,6 +101,8 @@ function openClosePopupAddImage() {
     popup[1].classList.toggle('popup_opened');
     inputName.value = name.textContent;
     inputJob.value = job.textContent;
+    urlImage.value = '';
+    nameImage.value = '';
 }
 
 function openImage(evt) {

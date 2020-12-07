@@ -2,4 +2,6 @@
     position: fixed;
     display: flex;
     flex-direction: column;
+    max-width: minmax(auto, auto);
+    max-height: 75vh;
 }
