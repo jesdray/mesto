@@ -10,16 +10,16 @@ const popupCloseEditInfo = document.querySelector('.popup__close_scripy_edit-inf
 const popupCloseCreateImage = document.querySelector('.popup__close_script_create-image');
 const popupCloseOpenImage = document.querySelector('.popup__close_script_open-image');
 
-let name = document.querySelector('.profile__name');
-let job = document.querySelector('.profile__job');
-let inputName = document.querySelector('.popup__text_script_name');
-let inputJob = document.querySelector('.popup__text_script_job');
+const name = document.querySelector('.profile__name');
+const job = document.querySelector('.profile__job');
+const inputName = document.querySelector('.popup__text_script_name');
+const inputJob = document.querySelector('.popup__text_script_job');
 
 const elements = document.querySelector('.elements');
 const cardsTemplate = document.querySelector('.element-template');
 
-let nameImage = document.querySelector('.popup__text_script_image-name');
-let urlImage = document.querySelector('.popup__text_script_image-url');
+const nameImage = document.querySelector('.popup__text_script_image-name');
+const urlImage = document.querySelector('.popup__text_script_image-url');
 
 const popupImage = document.querySelector('.popup__image');
 const popupImageName = document.querySelector('.popup__image-name');
@@ -76,7 +76,6 @@ function createNewImage() {
     const imageName = nameImage.value;
     const imageUrl = urlImage.value;
     const item = createImage({ name: imageName, link: imageUrl });
-    createImage(item);
     elements.prepend(item);
     urlImage.value = '';
     nameImage.value = '';
@@ -89,20 +88,32 @@ function removeImage(evt) {
     targetItem.remove();
 }
 
-function openClosePopup(itm) {
-    itm.classList.toggle('popup_opened');
+function closeEditInfoPopup() {
+    popupEditInfo.classList.remove('popup_opened');
 }
 
-function openClosePopupInfo() {
-    let itm = popupEditInfo;
-    openClosePopup(itm)
+function closeCreateImagePopup() {
+    popupCreateImage.classList.remove('popup_opened');
+}
+
+function closeOpenImagePopup() {
+    popupOpenImage.classList.remove('popup_opened');
+}
+
+function openPopup(itm) {
+    itm.classList.add('popup_opened');
+}
+
+function openPopupInfo() {
+    const itm = popupEditInfo;
+    openPopup(itm)
     inputName.value = name.textContent;
     inputJob.value = job.textContent;
 }
 
-function openClosePopupCreateImage() {
-    let itm = popupCreateImage;
-    openClosePopup(itm)
+function openPopupCreateImage() {
+    const itm = popupCreateImage;
+    openPopup(itm)
     inputName.value = name.textContent;
     inputJob.value = job.textContent;
     urlImage.value = '';
@@ -114,25 +125,25 @@ function openImage(evt) {
     popupImage.src = image.src;
     popupImage.alt = image.alt;
     popupImageName.textContent = image.alt;
-    openClosePopupImage();
+    openPopupImage();
 }
 
-function openClosePopupImage() {
-    let itm = popupOpenImage;
-    openClosePopup(itm);
+function openPopupImage() {
+    const itm = popupOpenImage;
+    openPopup(itm);
 }
 
 function formSubmitHandler(evt) {
     evt.preventDefault();
     name.textContent = inputName.value;
     job.textContent = inputJob.value;
-    openClosePopupInfo()
+    closeEditInfoPopup()
 }
 
 function formSubmitHandlerAddImage(evt) {
     evt.preventDefault();
     createNewImage();
-    openClosePopupCreateImage();
+    closeCreateImagePopup();
 }
 
 renderList();
@@ -140,10 +151,10 @@ renderList();
 popupEditInfo.addEventListener('submit', formSubmitHandler);
 popupCreateImage.addEventListener('submit', formSubmitHandlerAddImage);
 
-openedPopup.addEventListener('click', openClosePopupInfo);
+openedPopup.addEventListener('click', openPopupInfo);
 
-openedAddNewImagePopup.addEventListener('click', openClosePopupCreateImage)
+openedAddNewImagePopup.addEventListener('click', openPopupCreateImage)
 
-popupCloseEditInfo.addEventListener('click', openClosePopupInfo);
-popupCloseCreateImage.addEventListener('click', openClosePopupCreateImage);
-popupCloseOpenImage.addEventListener('click', openClosePopupImage);
+popupCloseEditInfo.addEventListener('click', closeEditInfoPopup);
+popupCloseCreateImage.addEventListener('click', closeCreateImagePopup);
+popupCloseOpenImage.addEventListener('click', closeOpenImagePopup);
