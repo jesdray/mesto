@@ -1,9 +1,14 @@
-let info = document.querySelector('.profile__info');
-let openedPopup = document.querySelector('.profile__edit-button');
-let openedAddnewimagePopup = document.querySelector('.profile__add-button')
-const popup = document.querySelectorAll('.popup');
-const closedPopup = document.querySelectorAll('.popup__close');
-const savePopup = document.querySelectorAll('.popup__button')
+const info = document.querySelector('.profile__info');
+const openedPopup = document.querySelector('.profile__edit-button');
+const openedAddNewImagePopup = document.querySelector('.profile__add-button')
+
+const popupEditInfo = document.querySelector('.popup_script_edit-info');
+const popupCreateImage = document.querySelector('.popup_script_create-image');
+const popupOpenImage = document.querySelector('.popup_script_open-image');
+
+const popupCloseEditInfo = document.querySelector('.popup__close_scripy_edit-info');
+const popupCloseCreateImage = document.querySelector('.popup__close_script_create-image');
+const popupCloseOpenImage = document.querySelector('.popup__close_script_open-image');
 
 let name = document.querySelector('.profile__name');
 let job = document.querySelector('.profile__job');
@@ -47,11 +52,11 @@ const initialCards = [
 ];
 
 function renderList() {
-    const listItem = initialCards.map(addImage);
+    const listItem = initialCards.map(createImage);
     elements.append(...listItem);
 };
 
-function addImage(item) {
+function createImage(item) {
     const cardsElement = cardsTemplate.content.cloneNode(true);
     const elementImage = cardsElement.querySelector('.element__image');
     const elementName = cardsElement.querySelector('.element__image-name');
@@ -66,20 +71,13 @@ function addImage(item) {
     return cardsElement;
 };
 
-function addNewImage() {
+function createNewImage() {
     if (nameImage.value !== '' && urlImage.value !== '') {
-    const cardsElement = cardsTemplate.content.cloneNode(true);
-    const elementImage = cardsElement.querySelector('.element__image');
-    const elementName = cardsElement.querySelector('.element__image-name');
-    cardsElement.querySelector('.element__button-like').addEventListener('click', function (evt) {
-        evt.target.classList.toggle('element__button-like_active')
-    });
-    cardsElement.querySelector('.element__trash').addEventListener('click', removeImage );
-    cardsElement.querySelector('.element__image').addEventListener('click', openImage);
-    elementImage.src = urlImage.value;
-    elementImage.alt = nameImage.value;
-    elementName.textContent = nameImage.value;
-    elements.prepend(cardsElement);
+    const imageName = nameImage.value;
+    const imageUrl = urlImage.value;
+    const item = createImage({ name: imageName, link: imageUrl });
+    createImage(item);
+    elements.prepend(item);
     urlImage.value = '';
     nameImage.value = '';
  };
@@ -91,14 +89,20 @@ function removeImage(evt) {
     targetItem.remove();
 }
 
+function openClosePopup(itm) {
+    itm.classList.toggle('popup_opened');
+}
+
 function openClosePopupInfo() {
-    popup[0].classList.toggle('popup_opened');
+    let itm = popupEditInfo;
+    openClosePopup(itm)
     inputName.value = name.textContent;
     inputJob.value = job.textContent;
 }
 
-function openClosePopupAddImage() {
-    popup[1].classList.toggle('popup_opened');
+function openClosePopupCreateImage() {
+    let itm = popupCreateImage;
+    openClosePopup(itm)
     inputName.value = name.textContent;
     inputJob.value = job.textContent;
     urlImage.value = '';
@@ -114,7 +118,8 @@ function openImage(evt) {
 }
 
 function openClosePopupImage() {
-    popup[2].classList.toggle('popup_opened');
+    let itm = popupOpenImage;
+    openClosePopup(itm);
 }
 
 function formSubmitHandler(evt) {
@@ -126,19 +131,19 @@ function formSubmitHandler(evt) {
 
 function formSubmitHandlerAddImage(evt) {
     evt.preventDefault();
-    addNewImage();
-    openClosePopupAddImage();
+    createNewImage();
+    openClosePopupCreateImage();
 }
 
 renderList();
 
-popup[0].addEventListener('submit', formSubmitHandler);
-popup[1].addEventListener('submit', formSubmitHandlerAddImage);
+popupEditInfo.addEventListener('submit', formSubmitHandler);
+popupCreateImage.addEventListener('submit', formSubmitHandlerAddImage);
 
 openedPopup.addEventListener('click', openClosePopupInfo);
 
-openedAddnewimagePopup.addEventListener('click', openClosePopupAddImage)
+openedAddNewImagePopup.addEventListener('click', openClosePopupCreateImage)
 
-closedPopup[0].addEventListener('click', openClosePopupInfo);
-closedPopup[1].addEventListener('click', openClosePopupAddImage);
-closedPopup[2].addEventListener('click', openClosePopupImage);
+popupCloseEditInfo.addEventListener('click', openClosePopupInfo);
+popupCloseCreateImage.addEventListener('click', openClosePopupCreateImage);
+popupCloseOpenImage.addEventListener('click', openClosePopupImage);
