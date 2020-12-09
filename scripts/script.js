@@ -88,16 +88,23 @@ function removeImage(evt) {
     targetItem.remove();
 }
 
+function closePopup(itm) {
+    itm.classList.remove('popup_opened');
+}
+
 function closeEditInfoPopup() {
-    popupEditInfo.classList.remove('popup_opened');
+    const itm = popupEditInfo;
+    closePopup(itm);
 }
 
 function closeCreateImagePopup() {
-    popupCreateImage.classList.remove('popup_opened');
+    const itm = popupCreateImage;
+    closePopup(itm);
 }
 
 function closeOpenImagePopup() {
-    popupOpenImage.classList.remove('popup_opened');
+    const itm = popupOpenImage;
+    closePopup(itm);
 }
 
 function openPopup(itm) {
