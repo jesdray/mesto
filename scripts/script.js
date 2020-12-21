@@ -12,17 +12,21 @@ const popupCloseOpenImage = document.querySelector('.popup__close_script_open-im
 
 const name = document.querySelector('.profile__name');
 const job = document.querySelector('.profile__job');
-const inputName = document.querySelector('.popup__text_script_name');
-const inputJob = document.querySelector('.popup__text_script_job');
+const inputName = document.querySelector('.popup__input_script_name');
+const inputJob = document.querySelector('.popup__input_script_job');
 
 const elements = document.querySelector('.elements');
 const cardsTemplate = document.querySelector('.element-template');
 
-const nameImage = document.querySelector('.popup__text_script_image-name');
-const urlImage = document.querySelector('.popup__text_script_image-url');
+const nameImage = document.querySelector('.popup__input_script_image-name');
+const urlImage = document.querySelector('.popup__input_script_image-url');
 
 const popupImage = document.querySelector('.popup__image');
 const popupImageName = document.querySelector('.popup__image-name');
+
+const overlayPopupEditInfo = document.querySelector('.popup__overlay_script_edit-info');
+const overlayPopupCreateImage = document.querySelector('.popup__overlay_script_create-image');
+const overlayOpenImage = document.querySelector('.popup__overlay_script_open-image');
 
 const initialCards = [
     {
@@ -88,6 +92,24 @@ function removeImage(evt) {
     targetItem.remove();
 }
 
+function keyDownCloseEditInfoPopup(evt) {
+    if (evt.key === "Escape") {
+        closeEditInfoPopup();
+    } else {};
+}
+
+function keyDownСloseCreateImagePopup(evt) {
+    if (evt.key === "Escape") {
+        closeCreateImagePopup();
+    } else {};
+}
+
+function keyDownСloseOpenImagePopup(evt) {
+    if (evt.key === "Escape") {
+        closeOpenImagePopup();
+    } else {};
+}
+
 function closePopup(itm) {
     itm.classList.remove('popup_opened');
 }
@@ -95,16 +117,19 @@ function closePopup(itm) {
 function closeEditInfoPopup() {
     const itm = popupEditInfo;
     closePopup(itm);
+    document.removeEventListener('keydown', keyDownCloseEditInfoPopup);
 }
 
 function closeCreateImagePopup() {
     const itm = popupCreateImage;
     closePopup(itm);
+    document.removeEventListener('keydown', keyDownСloseCreateImagePopup);
 }
 
 function closeOpenImagePopup() {
     const itm = popupOpenImage;
     closePopup(itm);
+    document.removeEventListener('keydown', keyDownСloseOpenImagePopup);
 }
 
 function openPopup(itm) {
@@ -113,18 +138,22 @@ function openPopup(itm) {
 
 function openPopupInfo() {
     const itm = popupEditInfo;
-    openPopup(itm)
+    enableValidation();
+    openPopup(itm);
     inputName.value = name.textContent;
     inputJob.value = job.textContent;
+    document.addEventListener('keydown', keyDownCloseEditInfoPopup);
 }
 
 function openPopupCreateImage() {
     const itm = popupCreateImage;
-    openPopup(itm)
+    enableValidation();
+    openPopup(itm);
     inputName.value = name.textContent;
     inputJob.value = job.textContent;
     urlImage.value = '';
     nameImage.value = '';
+    document.addEventListener('keydown', keyDownСloseCreateImagePopup);
 }
 
 function openImage(evt) {
@@ -133,6 +162,7 @@ function openImage(evt) {
     popupImage.alt = image.alt;
     popupImageName.textContent = image.alt;
     openPopupImage();
+    document.addEventListener('keydown', keyDownСloseOpenImagePopup);
 }
 
 function openPopupImage() {
@@ -161,6 +191,10 @@ popupCreateImage.addEventListener('submit', formSubmitHandlerAddImage);
 openedPopup.addEventListener('click', openPopupInfo);
 
 openedAddNewImagePopup.addEventListener('click', openPopupCreateImage)
+
+overlayPopupEditInfo.addEventListener('click', closeEditInfoPopup);
+overlayPopupCreateImage.addEventListener('click', closeCreateImagePopup);
+overlayOpenImage.addEventListener('click', closeOpenImagePopup);
 
 popupCloseEditInfo.addEventListener('click', closeEditInfoPopup);
 popupCloseCreateImage.addEventListener('click', closeCreateImagePopup);

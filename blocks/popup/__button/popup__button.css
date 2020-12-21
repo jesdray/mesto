@@ -1,5 +1,7 @@
 .popup__button {
     background-color: #000000;
+    border-radius: 2px;
+    border: 1px solid #000000;
     color: #ffffff;
     width: 85%;
     min-height: 50px;

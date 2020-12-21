@@ -29,24 +29,31 @@
             </footer>
         </div>
         <div class="popup popup_script_edit-info">
-            <form name="editing Profile Info" method="get" class="popup__container">
+            <div class="popup__overlay popup__overlay_script_edit-info"></div>
+            <form name="editing-profile-info" method="get" class="popup__container popup__container_script_edit-info" novalidate>
                 <button type="button" class="popup__close popup__close_scripy_edit-info"></button>
                 <h2 class="popup__title">Редактировать профиль</h2>
-                <input type="text" name="name" placeholder="Имя Фамилия" class="popup__text popup__text_script_name" value="" />
-                <input type="text" name="job" placeholder="Работа" class="popup__text popup__text_script_job" value="" />
+                <input type="text" id="name-edit" name="name" placeholder="Имя Фамилия" class="popup__input popup__input_script_name" value="" minlength="2" maxlength="40" required/>
+                <span id="name-edit-error" class="error"></span>
+                <input type="text" id="job-edit" name="job" placeholder="Работа" class="popup__input popup__input_script_job" value="" minlength="2" maxlength="200" required/>
+                <span id="job-edit-error" class="error"></span>
                 <button type="submit" class="popup__button">Сохранить</button>
             </form>
         </div>
         <div class="popup popup_script_create-image">
-            <form name="create images" method="get" class="popup__container">
+            <div class="popup__overlay popup__overlay_script_create-image"></div>
+            <form name="create-images" method="get" class="popup__container popup__container_script_create-image popup__form" novalidate>
                 <button type="button" class="popup__close popup__close_script_create-image"></button>
                 <h2 class="popup__title">Новое место</h2>
-                <input type="text" name="image name" placeholder="Название" class="popup__text popup__text_script_image-name" value="" />
-                <input type="text" name="image url" placeholder="Ссылка на картинку" class="popup__text popup__text_script_image-url" value="" />
+                <input type="text" id="name-image" name="image name" placeholder="Название" class="popup__input popup__input_script_image-name" value="" minlength="2" maxlength="30" required/>
+                <span id="name-image-error" class="error"></span>
+                <input type="url" id="url-image" name="image url" placeholder="Ссылка на картинку" class="popup__input popup__input_script_image-url" value="" required/>
+                <span id="url-image-error" class="error"></span>
                 <button type="submit" class="popup__button">Создать</button>
             </form> 
         </div>
         <div class="popup popup_script_open-image">
+            <div class="popup__overlay popup__overlay_script_open-image"></div>
             <div class="popup__image-container">
                 <img src="#" alt="#" class="popup__image">
                 <button type="button" class="popup__close popup__image-close popup__close_script_open-image"></button>
@@ -64,5 +71,6 @@
             </article>
         </template>
         <script src="scripts/script.js"></script>
+        <script src="scripts/validate.js"></script>
     </body>
 </html>
