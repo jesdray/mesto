@@ -116,13 +116,21 @@ function closePopup(itm) {
 
 function closeEditInfoPopup() {
     const itm = popupEditInfo;
+    const form = itm.querySelector('.popup__form')
+    const input = form.querySelectorAll('.popup__input')
+    clearingErrorFillerForm(form, input);
     closePopup(itm);
     document.removeEventListener('keydown', keyDownCloseEditInfoPopup);
 }
 
 function closeCreateImagePopup() {
     const itm = popupCreateImage;
+    const form = itm.querySelector('.popup__form')
+    const input = form.querySelectorAll('.popup__input')
     closePopup(itm);
+    input.forEach(itm => {
+        hideError(form, itm)
+    });
     document.removeEventListener('keydown', keyDownСloseCreateImagePopup);
 }
 
@@ -138,19 +146,19 @@ function openPopup(itm) {
 
 function openPopupInfo() {
     const itm = popupEditInfo;
-    enableValidation();
     openPopup(itm);
     inputName.value = name.textContent;
     inputJob.value = job.textContent;
+    const form = itm.querySelector('.popup__form')
+    const input = form.querySelectorAll('.popup__input')
+    clearingErrorFillerForm(form, input);
+    enableValidation();
     document.addEventListener('keydown', keyDownCloseEditInfoPopup);
 }
 
 function openPopupCreateImage() {
     const itm = popupCreateImage;
-    enableValidation();
     openPopup(itm);
-    inputName.value = name.textContent;
-    inputJob.value = job.textContent;
     urlImage.value = '';
     nameImage.value = '';
     document.addEventListener('keydown', keyDownСloseCreateImagePopup);

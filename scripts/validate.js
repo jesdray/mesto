@@ -27,7 +27,7 @@ function isValid(form, input) {
     }
 }
 
-function setButtonState(button, valid, config) {
+function setButtonState(button, valid) {
     if (valid) {
         button.classList.remove('popup__button_disabled');
         button.disabled = false;
@@ -37,26 +37,32 @@ function setButtonState(button, valid, config) {
     }
 }
 
-function setEventListener(form, config) {
+function setEventListener(form) {
     const inputList = form.querySelectorAll('.popup__input')
     const button = form.querySelector('.popup__button')
 
     inputList.forEach(input => {
         input.addEventListener('input', () => {
-            isValid(form, input, config);
-            setButtonState(button, form.checkValidity(), config)
+            isValid(form, input);
+            setButtonState(button, form.checkValidity())
         });
     });
 };
 
-function enableValidation(config) {
+function enableValidation() {
     const forms = document.querySelectorAll('.popup__container');
     forms.forEach(form => {
-        setEventListener(form, config);
+        setEventListener(form);
 
         const button = form.querySelector('.popup__button')
-        setButtonState(button, form.checkValidity(), config)
+        setButtonState(button, form.checkValidity())
     });
 };
 
-enableValidation(enableValidationConfig);
+function clearingErrorFillerForm(form, input) {
+    input.forEach(itm => {
+        isValid(form, itm);
+    });
+}
+
+enableValidation();
