@@ -6,6 +6,12 @@ const popupEditInfo = document.querySelector('.popup_script_edit-info');
 const popupCreateImage = document.querySelector('.popup_script_create-image');
 const popupOpenImage = document.querySelector('.popup_script_open-image');
 
+const formEditInfo = popupEditInfo.querySelector('.popup__form')
+const formCreateImage = popupCreateImage.querySelector('.popup__form')
+
+const inputEditInfoList = popupEditInfo.querySelectorAll('.popup__input');
+const inputCreateImageList = popupCreateImage.querySelectorAll('.popup__input');
+
 const popupCloseEditInfo = document.querySelector('.popup__close_scripy_edit-info');
 const popupCloseCreateImage = document.querySelector('.popup__close_script_create-image');
 const popupCloseOpenImage = document.querySelector('.popup__close_script_open-image');
@@ -27,38 +33,6 @@ const popupImageName = document.querySelector('.popup__image-name');
 const overlayPopupEditInfo = document.querySelector('.popup__overlay_script_edit-info');
 const overlayPopupCreateImage = document.querySelector('.popup__overlay_script_create-image');
 const overlayOpenImage = document.querySelector('.popup__overlay_script_open-image');
-
-const initialCards = [
-    {
-        name: 'Архыз',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-        name: 'Челябинская область',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-        name: 'Иваново',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-        name: 'Камчатка',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-        name: 'Холмогорский район',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-        name: 'Байкал',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-];
-
-function renderList() {
-    const listItem = initialCards.map(createImage);
-    elements.append(...listItem);
-};
 
 function createImage(item) {
     const cardsElement = cardsTemplate.content.cloneNode(true);
@@ -90,78 +64,53 @@ function removeImage(evt) {
     const targetElement = evt.target;
     const targetItem = targetElement.closest('.element');
     targetItem.remove();
-}
+} 
 
-function keyDownCloseEditInfoPopup(evt) {
+function keyDownClose(evt) {
     if (evt.key === "Escape") {
-        closeEditInfoPopup();
-    } else {};
-}
-
-function keyDownСloseCreateImagePopup(evt) {
-    if (evt.key === "Escape") {
-        closeCreateImagePopup();
-    } else {};
-}
-
-function keyDownСloseOpenImagePopup(evt) {
-    if (evt.key === "Escape") {
-        closeOpenImagePopup();
-    } else {};
-}
+        const itm = document.querySelector('.popup_opened');
+        closePopup(itm);
+    }
+};
 
 function closePopup(itm) {
     itm.classList.remove('popup_opened');
+    document.removeEventListener('keydown', keyDownClose);
 }
 
 function closeEditInfoPopup() {
-    const itm = popupEditInfo;
-    const form = itm.querySelector('.popup__form')
-    const input = form.querySelectorAll('.popup__input')
-    clearingErrorFillerForm(form, input);
-    closePopup(itm);
-    document.removeEventListener('keydown', keyDownCloseEditInfoPopup);
+    closePopup(popupEditInfo);
+    clearingErrorFillerForm(formEditInfo, inputEditInfoList, enableValidationConfig);
 }
 
 function closeCreateImagePopup() {
-    const itm = popupCreateImage;
-    const form = itm.querySelector('.popup__form')
-    const input = form.querySelectorAll('.popup__input')
-    closePopup(itm);
-    input.forEach(itm => {
-        hideError(form, itm)
-    });
-    document.removeEventListener('keydown', keyDownСloseCreateImagePopup);
+    closePopup(popupCreateImage);
+    clearingErrorFillerForm(formCreateImage, inputCreateImageList, enableValidationConfig);
+
 }
 
 function closeOpenImagePopup() {
-    const itm = popupOpenImage;
-    closePopup(itm);
-    document.removeEventListener('keydown', keyDownСloseOpenImagePopup);
+    closePopup(popupOpenImage);
 }
 
 function openPopup(itm) {
     itm.classList.add('popup_opened');
+    document.addEventListener('keydown', keyDownClose);
 }
 
 function openPopupInfo() {
-    const itm = popupEditInfo;
-    openPopup(itm);
     inputName.value = name.textContent;
     inputJob.value = job.textContent;
-    const form = itm.querySelector('.popup__form')
-    const input = form.querySelectorAll('.popup__input')
-    clearingErrorFillerForm(form, input);
-    enableValidation();
-    document.addEventListener('keydown', keyDownCloseEditInfoPopup);
+    clearingErrorFillerForm(formEditInfo, inputEditInfoList, enableValidationConfig);
+    setButtonState(formEditInfo.querySelector('.popup__button'), formEditInfo.checkValidity(), enableValidationConfig);
+    openPopup(popupEditInfo);
 }
 
 function openPopupCreateImage() {
-    const itm = popupCreateImage;
-    openPopup(itm);
     urlImage.value = '';
     nameImage.value = '';
-    document.addEventListener('keydown', keyDownСloseCreateImagePopup);
+    setButtonState(formCreateImage.querySelector('.popup__button'), formCreateImage.checkValidity(), enableValidationConfig);
+    openPopup(popupCreateImage);
 }
 
 function openImage(evt) {
@@ -169,13 +118,7 @@ function openImage(evt) {
     popupImage.src = image.src;
     popupImage.alt = image.alt;
     popupImageName.textContent = image.alt;
-    openPopupImage();
-    document.addEventListener('keydown', keyDownСloseOpenImagePopup);
-}
-
-function openPopupImage() {
-    const itm = popupOpenImage;
-    openPopup(itm);
+    openPopup(popupOpenImage);
 }
 
 function formSubmitHandler(evt) {
@@ -190,6 +133,11 @@ function formSubmitHandlerAddImage(evt) {
     createNewImage();
     closeCreateImagePopup();
 }
+
+function renderList() {
+    const listItem = initialCards.map(createImage);
+    elements.append(...listItem);
+};
 
 renderList();
 
