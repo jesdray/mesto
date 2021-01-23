@@ -1,4 +1,13 @@
-import {Card, popupOpenImage, elements} from './Card';
+import {Card} from './Card.js';
+import {FormValidator} from './FormValidator.js';
+
+const enableValidationConfig = ({
+    formSelector: '.popup__form',
+    inputSelector: '.popup__input',
+    inactiveButtonClass: 'popup__button_disabled',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__input_invalid'
+  }); 
 
 const initialCards = [
     {
@@ -27,18 +36,17 @@ const initialCards = [
     }
 ];
 
-const info = document.querySelector('.profile__info');
+const popupImage = document.querySelector('.popup__image');
+const popupImageName = document.querySelector('.popup__image-name');
+const popupOpenImage = document.querySelector('.popup_script_open-image');
+const overlayOpenImage = document.querySelector('.popup__overlay_script_open-image');
+const popupCloseOpenImage = document.querySelector('.popup__close_script_open-image');
+
 const openedPopup = document.querySelector('.profile__edit-button');
 const openedAddNewImagePopup = document.querySelector('.profile__add-button')
 
 const popupEditInfo = document.querySelector('.popup_script_edit-info');
 const popupCreateImage = document.querySelector('.popup_script_create-image');
-
-const formEditInfo = popupEditInfo.querySelector('.popup__form')
-const formCreateImage = popupCreateImage.querySelector('.popup__form')
-
-const inputEditInfoList = popupEditInfo.querySelectorAll('.popup__input');
-const inputCreateImageList = popupCreateImage.querySelectorAll('.popup__input');
 
 const popupCloseEditInfo = document.querySelector('.popup__close_scripy_edit-info');
 const popupCloseCreateImage = document.querySelector('.popup__close_script_create-image');
@@ -56,10 +64,24 @@ const urlImage = document.querySelector('.popup__input_script_image-url');
 const overlayPopupEditInfo = document.querySelector('.popup__overlay_script_edit-info');
 const overlayPopupCreateImage = document.querySelector('.popup__overlay_script_create-image');
 
+const formProfile = new FormValidator(document.querySelector('.popup__container_script_edit-info'), enableValidationConfig);
+formProfile.enableValidation();
+
+const formImage = new FormValidator(document.querySelector('.popup__container_script_create-image'), enableValidationConfig);
+formImage.enableValidation();
+
+
 function keyDownClose(evt) {
     if (evt.key === "Escape") {
         const itm = document.querySelector('.popup_opened');
-        closePopup(itm);
+        if (itm.classList.contains('popup_script_edit-info')) {
+            closeEditInfoPopup()
+        } else {
+            if (itm.classList.contains('popup_script_create-image')) {
+                closeCreateImagePopup()
+        } else {
+            closePopup(itm);
+        }}
     }
 };
 
@@ -70,17 +92,13 @@ function closePopup(itm) {
 
 function closeEditInfoPopup() {
     closePopup(popupEditInfo);
-    clearingErrorFillerForm(formEditInfo, inputEditInfoList, enableValidationConfig);
+    formProfile.clearErrorField();
 }
 
 function closeCreateImagePopup() {
     closePopup(popupCreateImage);
-    clearingErrorFillerForm(formCreateImage, inputCreateImageList, enableValidationConfig);
+    formImage.clearErrorField();
 
-}
-
-function closeOpenImagePopup() {
-    closePopup(popupOpenImage);
 }
 
 function openPopup(itm) {
@@ -91,15 +109,14 @@ function openPopup(itm) {
 function openPopupInfo() {
     inputName.value = name.textContent;
     inputJob.value = job.textContent;
-    clearingErrorFillerForm(formEditInfo, inputEditInfoList, enableValidationConfig);
-    setButtonState(formEditInfo.querySelector('.popup__button'), formEditInfo.checkValidity(), enableValidationConfig);
+    formProfile._setButtonState()
     openPopup(popupEditInfo);
 }
 
 function openPopupCreateImage() {
     urlImage.value = '';
     nameImage.value = '';
-    setButtonState(formCreateImage.querySelector('.popup__button'), formCreateImage.checkValidity(), enableValidationConfig);
+    formImage._setButtonState()
     openPopup(popupCreateImage);
 }
 
@@ -112,14 +129,21 @@ function formSubmitHandler(evt) {
 
 function formSubmitHandlerAddImage(evt) {
     evt.preventDefault();
-    createNewImage();
+    const data = [{name: nameImage.value,
+                    link: urlImage.value}];
+    const card = new Card(data[0],
+                            '.template_script_card');
+    const cardElement = card.createCard();
+
+    document.querySelector('.elements').prepend(cardElement);
     closeCreateImagePopup();
 }
 
 initialCards.forEach(itm => {
     const card = new Card(itm, '.template_script_card');
+    const cardElement = card.createCard();
 
-    elements.append(card);
+    document.querySelector('.elements').append(cardElement);
 });
 
 popupEditInfo.addEventListener('submit', formSubmitHandler);
@@ -134,3 +158,5 @@ overlayPopupCreateImage.addEventListener('click', closeCreateImagePopup);
 
 popupCloseEditInfo.addEventListener('click', closeEditInfoPopup);
 popupCloseCreateImage.addEventListener('click', closeCreateImagePopup);
+
+export {keyDownClose, popupImage, popupImageName, popupOpenImage, overlayOpenImage, popupCloseOpenImage, enableValidationConfig}

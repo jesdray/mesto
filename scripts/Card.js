@@ -1,39 +1,6 @@
-const initialCards = [
-    {
-        name: 'Архыз',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-        name: 'Челябинская область',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-        name: 'Иваново',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-        name: 'Камчатка',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-        name: 'Холмогорский район',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-        name: 'Байкал',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-];
+import {keyDownClose, popupImage, popupImageName, popupOpenImage, overlayOpenImage, popupCloseOpenImage} from "./script.js"
 
-const elements = document.querySelector('.elements');
-
-const popupImage = document.querySelector('.popup__image');
-const popupImageName = document.querySelector('.popup__image-name');
-const popupOpenImage = document.querySelector('.popup_script_open-image');
-const overlayOpenImage = document.querySelector('.popup__overlay_script_open-image');
-const popupCloseOpenImage = document.querySelector('.popup__close_script_open-image');
-
-class Card {
+export class Card {
     constructor (data, cardSelector) {
         this._name = data.name;
         this._link = data.link;
@@ -53,7 +20,6 @@ class Card {
         this._cardElement.querySelector('.element__image-name').textContent = this._name;
         this._setEventListenerLike();
         this._setEventListenerRemvoeCard();
-
         this._setEventListenersOpenCloseImage();
 
         return this._cardElement;
@@ -90,7 +56,7 @@ class Card {
         popupImage.alt = this._name;
         popupImageName.textContent = this._name;
         popupOpenImage.classList.add('popup_opened');
-        //document.addEventListener('keydown', keyDownClose);
+        document.addEventListener('keydown', keyDownClose);
     };
 
     _closeImage() {
@@ -98,22 +64,10 @@ class Card {
         popupImage.alt = '';
         popupImageName.textContent = '';
         popupOpenImage.classList.remove('popup_opened');
+        document.removeEventListener('keydown', keyDownClose);
     }
 
     _removeCard() {
         this._cardElement.remove();
     }
-
-    keyClosePopup(evt) {
-        if (evt.key === "Escape") {console.log(1);}
-    }
 }
-
-initialCards.forEach(itm => {
-    const card = new Card(itm, '.template_script_card');
-    const cardElement = card.createCard();
-
-    document.querySelector('.elements').append(cardElement);
-});
-
-export {Card, popupImage, popupImageName, popupOpenImage, elements, overlayOpenImage};
