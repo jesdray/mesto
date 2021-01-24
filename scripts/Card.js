@@ -1,4 +1,4 @@
-import {keyDownClose, popupImage, popupImageName, popupOpenImage, overlayOpenImage, popupCloseOpenImage} from "./script.js"
+import {openImage} from "./index.js"
 
 export class Card {
     constructor (data, cardSelector) {
@@ -18,53 +18,25 @@ export class Card {
         this._cardElement.querySelector('.element__image').src = this._link;
         this._cardElement.querySelector('.element__image').alt = this._name;
         this._cardElement.querySelector('.element__image-name').textContent = this._name;
-        this._setEventListenerLike();
-        this._setEventListenerRemvoeCard();
-        this._setEventListenersOpenCloseImage();
+        this._setEventListeners();
 
         return this._cardElement;
     }
 
-    _setEventListenerLike() {
-        this._cardElement.querySelector('.element__button-like').addEventListener('click', function (evt) {
-            evt.target.classList.toggle('element__button-like_active')
-       });
-    }
-
-    _setEventListenersOpenCloseImage() {
-        this._cardElement.querySelector('.element__image').addEventListener('click', () => {
-            this._openImage();
-        });
-
-        popupCloseOpenImage.addEventListener('click', () => {
-            this._closeImage();
-        });
-
-        overlayOpenImage.addEventListener('click', () => {
-            this._closeImage();
-        });
-    }
-
-    _setEventListenerRemvoeCard() {
-        this._cardElement.querySelector('.element__trash').addEventListener('click', () => {
-            this._removeCard();
-        });
-    }
-
-    _openImage() {
-        popupImage.src = this._link;
-        popupImage.alt = this._name;
-        popupImageName.textContent = this._name;
-        popupOpenImage.classList.add('popup_opened');
-        document.addEventListener('keydown', keyDownClose);
+    _switchLike(evt) {
+        evt.target.classList.toggle('element__button-like_active')
     };
 
-    _closeImage() {
-        popupImage.src = '';
-        popupImage.alt = '';
-        popupImageName.textContent = '';
-        popupOpenImage.classList.remove('popup_opened');
-        document.removeEventListener('keydown', keyDownClose);
+    _setEventListeners() {
+        this._cardElement.querySelector('.element__image').addEventListener('click', openImage);
+
+        this._cardElement.querySelector('.element__button-like').addEventListener('click', (evt) => {
+            this._switchLike(evt);
+       });
+
+       this._cardElement.querySelector('.element__trash').addEventListener('click', () => {
+        this._removeCard();
+    });
     }
 
     _removeCard() {

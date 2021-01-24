@@ -71,66 +71,69 @@ const formImage = new FormValidator(document.querySelector('.popup__container_sc
 formImage.enableValidation();
 
 
-function keyDownClose(evt) {
+function closeKeyDown(evt) {
     if (evt.key === "Escape") {
         const itm = document.querySelector('.popup_opened');
-        if (itm.classList.contains('popup_script_edit-info')) {
-            closeEditInfoPopup()
-        } else {
-            if (itm.classList.contains('popup_script_create-image')) {
-                closeCreateImagePopup()
-        } else {
-            closePopup(itm);
-        }}
+        closePopup(itm);
     }
 };
 
 function closePopup(itm) {
     itm.classList.remove('popup_opened');
-    document.removeEventListener('keydown', keyDownClose);
+    document.removeEventListener('keydown', closeKeyDown);
 }
 
 function closeEditInfoPopup() {
     closePopup(popupEditInfo);
-    formProfile.clearErrorField();
 }
 
 function closeCreateImagePopup() {
     closePopup(popupCreateImage);
-    formImage.clearErrorField();
+}
 
+function closeOpenImage() {
+    closePopup(popupOpenImage)
 }
 
 function openPopup(itm) {
     itm.classList.add('popup_opened');
-    document.addEventListener('keydown', keyDownClose);
+    document.addEventListener('keydown', closeKeyDown);
 }
 
 function openPopupInfo() {
     inputName.value = name.textContent;
     inputJob.value = job.textContent;
     formProfile._setButtonState()
+    formProfile.clearErrorField()
     openPopup(popupEditInfo);
 }
 
 function openPopupCreateImage() {
-    urlImage.value = '';
-    nameImage.value = '';
+    popupCreateImage.querySelector('.popup__form').reset();
     formImage._setButtonState()
+    formImage.clearErrorField();
     openPopup(popupCreateImage);
 }
 
-function formSubmitHandler(evt) {
+function openImage(evt) {
+    const image = evt.target;
+    popupImage.src = image.src;
+    popupImage.alt = image.alt;
+    popupImageName.textContent = image.alt;
+    openPopup(popupOpenImage);
+}
+
+function handlerFormSubmitEditInfo(evt) {
     evt.preventDefault();
     name.textContent = inputName.value;
     job.textContent = inputJob.value;
     closeEditInfoPopup()
 }
 
-function formSubmitHandlerAddImage(evt) {
+function handlerFormSubmitAddImage(evt) {
     evt.preventDefault();
     const data = [{name: nameImage.value,
-                    link: urlImage.value}];
+                   link: urlImage.value}];
     const card = new Card(data[0],
                             '.template_script_card');
     const cardElement = card.createCard();
@@ -146,8 +149,8 @@ initialCards.forEach(itm => {
     document.querySelector('.elements').append(cardElement);
 });
 
-popupEditInfo.addEventListener('submit', formSubmitHandler);
-popupCreateImage.addEventListener('submit', formSubmitHandlerAddImage);
+popupEditInfo.addEventListener('submit', handlerFormSubmitEditInfo);
+popupCreateImage.addEventListener('submit', handlerFormSubmitAddImage);
 
 openedPopup.addEventListener('click', openPopupInfo);
 
@@ -155,8 +158,10 @@ openedAddNewImagePopup.addEventListener('click', openPopupCreateImage)
 
 overlayPopupEditInfo.addEventListener('click', closeEditInfoPopup);
 overlayPopupCreateImage.addEventListener('click', closeCreateImagePopup);
+overlayOpenImage.addEventListener('click', closeOpenImage);
 
 popupCloseEditInfo.addEventListener('click', closeEditInfoPopup);
 popupCloseCreateImage.addEventListener('click', closeCreateImagePopup);
+popupCloseOpenImage.addEventListener('click', closeOpenImage);
 
-export {keyDownClose, popupImage, popupImageName, popupOpenImage, overlayOpenImage, popupCloseOpenImage, enableValidationConfig}
+export {openImage}
