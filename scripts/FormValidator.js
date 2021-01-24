@@ -15,7 +15,7 @@ export class FormValidator {
         this._inputList.forEach(input => {
             input.addEventListener('input', () => {
                 this._isValid(input);
-                this._setButtonState(this._button)
+                this.setButtonState(this._button)
             });
         });
     };
@@ -40,7 +40,7 @@ export class FormValidator {
         input.classList.add(this._errorClass);
     };
 
-    _setButtonState() {
+    setButtonState() {
         if (this._form.checkValidity()) {
             this._button.classList.remove(this._inactiveButtonClass);
             this._button.disabled = false;

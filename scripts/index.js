@@ -103,14 +103,14 @@ function openPopup(itm) {
 function openPopupInfo() {
     inputName.value = name.textContent;
     inputJob.value = job.textContent;
-    formProfile._setButtonState()
+    formProfile.setButtonState()
     formProfile.clearErrorField()
     openPopup(popupEditInfo);
 }
 
 function openPopupCreateImage() {
     popupCreateImage.querySelector('.popup__form').reset();
-    formImage._setButtonState()
+    formImage.setButtonState()
     formImage.clearErrorField();
     openPopup(popupCreateImage);
 }
@@ -123,14 +123,14 @@ function openImage(evt) {
     openPopup(popupOpenImage);
 }
 
-function handlerFormSubmitEditInfo(evt) {
+function submitEditInfoForm(evt) {
     evt.preventDefault();
     name.textContent = inputName.value;
     job.textContent = inputJob.value;
     closeEditInfoPopup()
 }
 
-function handlerFormSubmitAddImage(evt) {
+function submitAddImageForm(evt) {
     evt.preventDefault();
     const data = [{name: nameImage.value,
                    link: urlImage.value}];
@@ -149,8 +149,8 @@ initialCards.forEach(itm => {
     document.querySelector('.elements').append(cardElement);
 });
 
-popupEditInfo.addEventListener('submit', handlerFormSubmitEditInfo);
-popupCreateImage.addEventListener('submit', handlerFormSubmitAddImage);
+popupEditInfo.addEventListener('submit', submitEditInfoForm);
+popupCreateImage.addEventListener('submit', submitAddImageForm);
 
 openedPopup.addEventListener('click', openPopupInfo);
 
