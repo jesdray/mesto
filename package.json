@@ -1,0 +1,25 @@
+{
+  "name": "mesto",
+  "version": "1.0.0",
+  "description": "---\r ### **На сайте можно.**\r  - Изменить имя, фамилию и вашу деятельность.\r  - Добавить картинку и ее название.\r ---\r ## **Технологии используемые в проекте**",
+  "main": "index.js",
+  "scripts": {
+    "build": "rm -rf dist && webpack --mode production",
+    "dev": "webpack serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jesdray/mesto.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jesdray/mesto/issues"
+  },
+  "homepage": "https://github.com/jesdray/mesto#readme",
+  "devDependencies": {
+    "webpack": "^5.21.1",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
+  }
+}

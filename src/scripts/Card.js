@@ -1,10 +1,9 @@
-import {openImage} from "./index.js"
-
 export class Card {
-    constructor (data, cardSelector) {
+    constructor ({data, handleCardClick}, cardSelector, ) {
         this._name = data.name;
         this._link = data.link;
         this._cardSelector = cardSelector;
+        this._handleCardClick = handleCardClick;
     }
 
     _getTemplate() {
@@ -28,7 +27,11 @@ export class Card {
     };
 
     _setEventListeners() {
-        this._cardElement.querySelector('.element__image').addEventListener('click', openImage);
+        this._cardElement.querySelector('.element__image').addEventListener('click', () => {
+            this._handleCardClick({ name: this._name,
+                                     url: this._link
+                                 });
+        });
 
         this._cardElement.querySelector('.element__button-like').addEventListener('click', (evt) => {
             this._switchLike(evt);
