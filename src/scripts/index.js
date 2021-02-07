@@ -1,3 +1,23 @@
+import editButton from '../images/edit_button.svg';
+import like from '../images/like.svg';
+import likeActive from '../images/like_active.svg';
+import logo from '../images/logo.svg';
+import plus from '../images/plus.svg';
+import trash from '../images/trash.svg';
+import profileAvatar from '../images/profile_avatar.jpg';
+import '../page/index.css'
+
+const pictures = [
+    {name: 'edit_button', image:  editButton},
+    {name: 'like', image: like},
+    {name: 'like_active', image: likeActive},
+    {name: 'logo', image: logo},
+    {name: 'plus', image: plus},
+    {name: 'trash', image: trash},
+    {name: 'profile_avatar', image: profileAvatar}
+
+]
+
 import {Card} from './Card.js';
 import {FormValidator} from './FormValidator.js';
 import Section from './Section.js';
@@ -123,12 +143,6 @@ function openPopupCreateImage() {
     popupImageCreate.open();
 }
 
-function openImage(evt) {
-    const image = evt.target;
-    popupImage.open(image);
-}
-
-
 function submitEditInfoForm(evt) {
     evt.preventDefault();
     const inputValue = popupInfo._getInputValues();
@@ -156,18 +170,6 @@ function submitAddImageForm(evt) {
     closeCreateImagePopup();
 }
 
-// initialCards.forEach(data => {
-//     const card = new Card({ data,
-//                             handleCardClick: (data) => {
-//                                 popupImage.open(data);
-//                             }
-//                             },
-//                             '.template_script_card');
-//     const cardElement = card.createCard();
-
-//     document.querySelector('.elements').append(cardElement);
-// });
-
 cardList.renderer();
 
 popupEditInfo.addEventListener('submit', submitEditInfoForm);
@@ -185,4 +187,3 @@ popupCloseEditInfo.addEventListener('click', closeEditInfoPopup);
 popupCloseCreateImage.addEventListener('click', closeCreateImagePopup);
 popupCloseOpenImage.addEventListener('click', closeOpenImage);
 
-export {openImage}
