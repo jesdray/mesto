@@ -10,7 +10,8 @@ export default class Popup{
     }
 
     setEventListeners() {
-        this._popup.querySelector('.popup__close').addEventListener('click', this.close())
+        this._popup.querySelector('.popup__close').addEventListener('click', this.close.bind(this));
+        this._popup.querySelector('.popup__overlay').addEventListener('click', this.close.bind(this));
     }
 
     open() {
@@ -22,4 +23,4 @@ export default class Popup{
         this._popup.classList.remove('popup_opened');
         document.removeEventListener('keydown', this._handleEscClose.bind(this));
     }
-}
+}   

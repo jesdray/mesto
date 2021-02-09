@@ -11,11 +11,14 @@ export class Card {
 
         return element;
     }
+
     createCard() {
         this._cardElement = this._getTemplate();
 
-        this._cardElement.querySelector('.element__image').src = this._link;
-        this._cardElement.querySelector('.element__image').alt = this._name;
+        this._image = this._cardElement.querySelector('.element__image')
+
+        this._image.src = this._link;
+        this._image.alt = this._name;
         this._cardElement.querySelector('.element__image-name').textContent = this._name;
         this._setEventListeners();
 
@@ -26,10 +29,14 @@ export class Card {
         evt.target.classList.toggle('element__button-like_active')
     };
 
+    _removeCard() {
+        this._cardElement.remove();
+    }
+
     _setEventListeners() {
         this._cardElement.querySelector('.element__image').addEventListener('click', () => {
             this._handleCardClick({ name: this._name,
-                                     url: this._link
+                                    url: this._link
                                  });
         });
 
@@ -38,11 +45,7 @@ export class Card {
        });
 
        this._cardElement.querySelector('.element__trash').addEventListener('click', () => {
-        this._removeCard();
+            this._removeCard();
     });
-    }
-
-    _removeCard() {
-        this._cardElement.remove();
     }
 }

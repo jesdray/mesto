@@ -1,11 +1,11 @@
 import Popup from './Popup.js';
 
 export default class PopupWithForm extends Popup{
-    constructor(popupSelector, sambitForm) {
+    constructor({submitForm}, popupSelector) {
         super();
         this._popup = popupSelector;
-        this._form = popupSelector.querySelector('.popup__form');
-        this._sambitForm = sambitForm;
+        this._form = popupSelector.querySelector('.popup__container');
+        this._sumbitForm = submitForm;
     }
 
     _getInputValues() {
@@ -22,7 +22,11 @@ export default class PopupWithForm extends Popup{
 
     setEventListeners() {
         super.setEventListeners();
-        this._formValue.querySelector('.popup__button').addEventListener('sumbit', )
+        this._form.addEventListener('submit', (evt) => {
+            evt.preventDefault();
+            const value = this._getInputValues()
+            this._sumbitForm(value);
+        })
     }
 
     close() {
