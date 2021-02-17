@@ -13,7 +13,12 @@
             </header>
             <main class="main">
                 <section class="profile">
-                    <img src="<%=require('./images/profile_avatar.jpg')%>" alt="Ваш аватар" class="profile__avatar" />
+                    <div class="profile__avatar-box">
+                        <div class="profile__avatar-overlay">
+                            <button type="button" class="profile__avatar-button"></button>
+                        </div>
+                        <img src="<%=require('./images/profile_avatar.jpg')%>" alt="Ваш аватар" class="profile__avatar" />
+                    </div>
                     <div class="profile__info">
                         <h1 class="profile__name">Жак-Ив Кусто</h1>
                         <p class="profile__job">Исследователь океана</p>
@@ -28,6 +33,7 @@
                 <p class="footer__copyright">&copy; Шумилов Евгений</p>
             </footer>
         </div>
+        <!-- Попап редактирования информации -->
         <div class="popup popup_script_edit-info">
             <div class="popup__overlay popup__overlay_script_edit-info"></div>
             <form name="editing-profile-info" method="get" class="popup__container popup__container_script_edit-info popup__form" novalidate>
@@ -35,13 +41,25 @@
                 <h2 class="popup__title">Редактировать профиль</h2>
                 <input type="text" id="name-edit" name="name" placeholder="Имя Фамилия" class="popup__input popup__input_script_name" value="" minlength="2" maxlength="40" required/>
                 <span id="name-edit-error" class="error"></span>
-                <input type="text" id="job-edit" name="job" placeholder="Работа" class="popup__input popup__input_script_job" value="" minlength="2" maxlength="200" required/>
+                <input type="text" id="job-edit" name="about" placeholder="Работа" class="popup__input popup__input_script_job" value="" minlength="2" maxlength="200" required/>
                 <span id="job-edit-error" class="error"></span>
                 <button type="submit" class="popup__button">Сохранить</button>
             </form>
         </div>
+        <!-- Попап обновление аватара -->
+        <div class="popup popup_script_edit-avatar">
+            <div class="popup__overlay popup__overlay_script_edit-avatar"></div>
+            <form name="editing-profile-avatar" method="get" class="popup__container popup__container_script_edit-avatar popup__form" novalidate>
+                <button type="button" class="popup__close popup__close_scripy_edit-avatar"></button>
+                <h2 class="popup__title popup__title-avatar">Обновить аватар</h2>
+                <input type="url" id="edit-avatar" name="about" placeholder="Ссылка на новый аватар" class="popup__input popup__input_script_edit-avatar" value="" required/>
+                <span id="edit-avatar-error" class="error"></span>
+                <button type="submit" class="popup__button">Сохранить</button>
+            </form>
+        </div>
+        <!-- Попап создания новой карты-->
         <div class="popup popup_script_create-image">
-            <div class="popup__overlay popup__overlay_script_create-image"></div>
+            <div class="popup__overlay "></div>
             <form name="create-images" method="get" class="popup__container popup__container_script_create-image popup__form" novalidate>
                 <button type="button" class="popup__close popup__close_script_create-image"></button>
                 <h2 class="popup__title">Новое место</h2>
@@ -52,6 +70,16 @@
                 <button type="submit" class="popup__button">Создать</button>
             </form> 
         </div>
+        <!-- Попап подтверждения -->
+        <div class="popup popup_script_confirmation">
+            <div class="popup__overlay "></div>
+            <form name="confirmation" method="get" class="popup__container popup__container_script_confirmation popup__form" novalidate>
+                <button type="button" class="popup__close popup__close_script_confirmation"></button>
+                <h2 class="popup__title">Вы уверены?</h2>
+                <button type="submit" class="popup__button">Да</button>
+            </form> 
+        </div>
+        <!-- Попап открытой картинки -->
         <div class="popup popup_script_open-image">
             <div class="popup__overlay popup__overlay_script_open-image"></div>
             <div class="popup__image-container">
@@ -60,13 +88,17 @@
                 <h2 class="popup__image-name"></h2>
             </div>
         </div>
+        <!-- темплате карты -->
         <template class="element-template template_script_card">
             <article class="element">
                 <img src="#" alt="#" class="element__image" />
                 <button type="button" class="element__trash"></button>
                 <div class="element__content">
                     <h2 class="element__image-name"></h2>
-                    <button type="button" class="element__button-like" aria-label="Лайк"></button>
+                    <div class="element__like-box">
+                        <button type="button" class="element__button-like" aria-label="Лайк"></button>
+                        <p class="element__number-like">0</p>
+                    </div>
                 </div>
             </article>
         </template>

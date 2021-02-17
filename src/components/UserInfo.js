@@ -13,6 +13,10 @@ export default class UserInfo {
 
     setUserInfo(data) {
         this._container.querySelector('.profile__name').textContent = data.name;
-        this._container.querySelector('.profile__job').textContent = data.job;
+        this._container.querySelector('.profile__job').textContent = data.about;
+    }
+
+    setUserAvatar(avatar) {
+        this._container.querySelector('.profile__avatar').src = avatar;
     }
 }

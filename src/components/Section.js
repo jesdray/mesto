@@ -6,8 +6,12 @@ export default class Section{
         this._container = containerSelector;
     }
 
-    addItem(element) {
+    addNewItem(element) {
         this._container.prepend(element);
+    }
+
+    addItem(element) {
+        this._container.append(element);
     }
     
     renderer() {
