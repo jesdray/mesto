@@ -6,17 +6,16 @@ export default class UserInfo {
     }
 
     getUserInfo() {
-        this._userInfoList = { userName: this._userName,
-                               userJob: this._userJob}
+        this._userInfoList = { userName: this._userName, userJob: this._userJob };
         return this._userInfoList;
     }
 
     setUserInfo(data) {
-        this._container.querySelector('.profile__name').textContent = data.name;
-        this._container.querySelector('.profile__job').textContent = data.about;
+        this._container.querySelector(".profile__name").textContent = data.name;
+        this._container.querySelector(".profile__job").textContent = data.about;
     }
 
     setUserAvatar(avatar) {
-        this._container.querySelector('.profile__avatar').src = avatar;
+        this._container.querySelector(".profile__avatar").src = avatar;
     }
 }

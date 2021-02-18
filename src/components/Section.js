@@ -1,5 +1,5 @@
-export default class Section{
-    constructor({ data, renderer}, containerSelector) {
+export default class Section {
+    constructor({ data, renderer }, containerSelector) {
         this._initialArray = data;
         this._renderer = renderer;
 
@@ -13,12 +13,12 @@ export default class Section{
     addItem(element) {
         this._container.append(element);
     }
-    
+
     renderer() {
-        this._initialArray.forEach(item => {
+        this._initialArray.forEach((item) => {
             const element = this._renderer(item);
 
             this.addItem(element);
-        })
+        });
     }
 }
