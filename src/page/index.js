@@ -48,23 +48,23 @@ const api = new Api({
 });
 
 function putLike() {
-    if (this._likeActive === true) {
-        api.removeLike(this._card)
+    if (this.likeActive === true) {
+        api.removeLike(this.card)
             .then((res) => {
-                this._like.textContent = res.likes.length;
-                this._likeActive = false;
-                this._switchLike();
+                this.like.textContent = res.likes.length;
+                this.likeActive = false;
+                this.switchLike();
             })
             .catch((err) => {
                 console.log(err);
             });
     } else {
-        if (this._likeActive === false) {
-            api.setLike(this._card)
+        if (this.likeActive === false) {
+            api.setLike(this.card)
                 .then((res) => {
-                    this._like.textContent = res.likes.length;
-                    this._likeActive = true;
-                    this._switchLike();
+                    this.like.textContent = res.likes.length;
+                    this.likeActive = true;
+                    this.switchLike();
                 })
                 .catch((err) => {
                     console.log(err);
@@ -74,36 +74,21 @@ function putLike() {
 }
 
 function renderTrash() {
-    this._user
-        .then((user) => {
-            return user._id === this._ownerId;
-        })
-        .then((isTrue) => {
-            if (isTrue) {
-                this._cardElement.querySelector(".element__trash").classList.add("element__trash_active");
-                this._cardElement.querySelector(".element__trash").addEventListener("click", () => {
-                    this._popupConfirmDelete.confirmDelet(this._card);
-                    this._popupConfirmDelete.open();
+            if (this.userId === this.ownerId) {
+                this.cardElement.querySelector(".element__trash").classList.add("element__trash_active");
+                this.cardElement.querySelector(".element__trash").addEventListener("click", () => {
+                    this.popupConfirmDelete.confirmDelet(this.card);
+                    this.popupConfirmDelete.open();
                 });
             }
-        })
-        .catch((err) => {
-            console.log(err);
-        });
 }
 
 function renderLike() {
-    this._likes.forEach((item) => {
-        this._user
-            .then((user) => {
-                if (user._id === item._id) {
-                    this._likeActive = true;
-                    this._switchLike();
+    this.likes.forEach((item) => {
+                if (this.userId === item._id) {
+                    this.likeActive = true;
+                    this.switchLike();
                 }
-            })
-            .catch((err) => {
-                console.log(err);
-            });
     });
 }
 
@@ -116,11 +101,11 @@ function newCard(data) {
             },
         },
         ".template_script_card",
-        user,
+        userInfo.getUserId(),
         popupConfirmDelete,
         putLike,
         renderTrash,
-        renderLike
+        renderLike,
     );
     return card;
 }
@@ -259,12 +244,14 @@ const cardList = api
 Promise.all([{ user: user, cardList: cardList }]).then((data) => {
     data[0].user
         .then((data) => {
+            userInfo.setUserId(data);
             userInfo.setUserInfo(data);
             userInfo.setUserAvatar(data.avatar);
         })
         .catch((err) => {
             console.log(err);
-        });
+    });
+    
     data[0].cardList.then((data) => {
         const cardList = new Section(
             {
@@ -279,7 +266,6 @@ Promise.all([{ user: user, cardList: cardList }]).then((data) => {
             },
             document.querySelector(".elements")
         );
-
         cardList.renderer();
     });
 });
